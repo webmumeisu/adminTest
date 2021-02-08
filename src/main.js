@@ -33,6 +33,14 @@ Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 
+const AV = require('leancloud-storage')
+AV.init({
+  appId: 'RVLL0gXHb2cREUvaTySryvys-gzGzoHsz',
+  appKey: 'ht0d5ridMNzhCfKx4yopWT52',
+  serverURL: 'https://rvll0gxh.lc-cn-n1-shared.com'
+})
+Vue.prototype.$AV = AV
+
 Vue.config.productionTip = false
 
 new Vue({
