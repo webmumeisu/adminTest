@@ -49,16 +49,28 @@
             <span class="green">{{ scope.row.health_code }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="绿色分" prop="health_score" min-width="60px" align="center" />
+        <!-- <el-table-column label="绿色分" prop="health_score" min-width="60px" align="center" /> -->
       </el-table>
+
+      <!-- <el-pagination
+        :total="total"
+        layout="total, sizes, prev, pager, next, jumper"
+        :current-page.sync="query.pageNum"
+        :page-size.sync="query.pageSize"
+        @current-change="fetchData(1)"
+        @size-change="fetchData(2)"
+      /> -->
+      <pagination v-show="total>0" :total="total" :page.sync="query.pageNum" :limit.sync="query.pageSize" @pagination="fetchData" />
     </div>
   </div>
 </template>
 
 <script>
+import Pagination from '@/components/Pagination'
 // import { getList } from '@/api/table'
 
 export default {
+  components: { Pagination },
   filters: {
     statusFilter(status) {
       const statusMap = {
