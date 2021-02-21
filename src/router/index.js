@@ -83,9 +83,9 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        name: '乡村居民',
+        name: '打印文件',
         component: () => import('@/views/form/index'),
-        meta: { title: '乡村居民', icon: 'form' }
+        meta: { title: '打印文件', icon: 'form' }
       }
     ]
   },
