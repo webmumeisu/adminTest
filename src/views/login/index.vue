@@ -4,7 +4,7 @@
 
       <div class="title-container">
         <h3 class="title" @click="showType = '1'">账号登录</h3>
-        <h3 class="title" @click="showType = '2'">验证码登录</h3>
+        <!-- <h3 class="title" @click="showType = '2'">验证码登录</h3> -->
       </div>
       <!-- 输入框 -->
       <div v-show="showType === '2'">
@@ -30,7 +30,7 @@
           <el-input
             :key="passwordType"
             ref="password"
-            v-model="loginForm.yzm"
+            v-model="loginForm.password"
             :type="passwordType"
             placeholder="Password"
             name="password"
@@ -93,27 +93,30 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入用户名'))
       } else {
         callback()
       }
     }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
-        callback()
-      }
-    }
+    // 密码长度判断
+    // const validatePassword = (rule, value, callback) => {
+    //   if (value.length < 6) {
+    //     callback(new Error('The password can not be less than 6 digits'))
+    //   } else {
+    //     callback()
+    //   }
+    // }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        // username: 'admin',
+        // password: '111111'
+        username: '',
+        password: ''
       },
-      showType: '1',
+      showType: '2',
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }]
+        // password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
       passwordType: 'password',
@@ -141,7 +144,20 @@ export default {
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
+        console.log(valid, 'ww', this.loginForm)
         if (valid) {
+          const login = this.loginForm
+          if (login.username === 'admin' && login === '111111') {
+            console.log('正确')
+          } else {
+            this.$message({
+              showClose: true,
+              message: '账号或密码错误',
+              type: 'error'
+            })
+            return 1
+          }
+
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })

@@ -62,5 +62,9 @@
     "node": ">=8.9",
     "npm": ">= 3.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webmumeisu/adminTest.git"
+  },
   "license": "MIT"
 }
