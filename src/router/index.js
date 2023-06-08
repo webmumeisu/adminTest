@@ -78,14 +78,14 @@ export const constantRoutes = [
   },
 
   {
-    path: '/form',
+    path: '/print',
     component: Layout,
     children: [
       {
         path: 'index',
         name: '打印文件',
-        component: () => import('@/views/form/index'),
-        meta: { title: '打印文件', icon: 'form' }
+        component: () => import('@/views/print/index'),
+        meta: { title: '打印文件', icon: 'print' }
       }
     ]
   },
@@ -103,7 +103,7 @@ export const constantRoutes = [
       {
         path: 'menu1',
         component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
+        name: '风险报表管理',
         meta: { title: 'Menu1' },
         children: [
           {

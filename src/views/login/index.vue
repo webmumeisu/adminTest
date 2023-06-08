@@ -147,7 +147,7 @@ export default {
         console.log(valid, 'ww', this.loginForm)
         if (valid) {
           const login = this.loginForm
-          if (login.username === 'admin' && login === '111111') {
+          if (login.username === 'admin' && login.password === '111111') {
             console.log('正确')
           } else {
             this.$message({

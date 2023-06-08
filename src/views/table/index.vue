@@ -1,22 +1,26 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-select v-model="query.upStatus1" placeholder="自然村" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in upStatus1" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-select v-model="query.upStatus2" placeholder="性别" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in upStatus2" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-select v-model="query.upStatus3" placeholder="群众类型" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in upStatus3" :key="item" :label="item" :value="item" />
-      </el-select>
-      <el-input v-model="query.name" placeholder="请输入姓名" style="width: 200px;" class="filter-item" />
-      <el-input v-model="query.id_card" placeholder="请输入身份证号" style="width: 200px;" class="filter-item" />
-      <el-input v-model="query.room_number" placeholder="请输入门牌号" style="width: 200px;" class="filter-item" />
-
-      <el-button class="filter-item search" type="primary" icon="el-icon-search" @click="fetchData">
-        查询
-      </el-button>
+      <div class="search-box">
+        <el-select v-model="query.upStatus1" placeholder="自然村" clearable class="filter-item" style="width: 130px">
+          <el-option v-for="item in upStatus1" :key="item" :label="item" :value="item" />
+        </el-select>
+        <el-select v-model="query.upStatus2" placeholder="性别" clearable class="filter-item" style="width: 130px">
+          <el-option v-for="item in upStatus2" :key="item" :label="item" :value="item" />
+        </el-select>
+        <el-select v-model="query.upStatus3" placeholder="群众类型" clearable class="filter-item" style="width: 130px">
+          <el-option v-for="item in upStatus3" :key="item" :label="item" :value="item" />
+        </el-select>
+        <el-input v-model="query.name" placeholder="请输入姓名" style="width: 200px;" class="filter-item" />
+        <el-input v-model="query.id_card" placeholder="请输入身份证号" style="width: 200px;" class="filter-item" />
+        <el-input v-model="query.room_number" placeholder="请输入门牌号" style="width: 200px;" class="filter-item" />
+        <el-button class="filter-item search" type="primary" icon="el-icon-search" @click="fetchData">
+          查询
+        </el-button>
+        <el-button class="filter-item search" type="primary" icon="el-icon-search" @click="handleExport">
+          导出
+        </el-button>
+      </div>
 
       <el-table
         v-loading="listLoading"
@@ -67,7 +71,8 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-// import { getList } from '@/api/table'
+import { downExcel } from '@/api/table'
+import { excelDate } from '@/utils/validate.js'
 
 export default {
   components: { Pagination },
@@ -83,6 +88,7 @@ export default {
   },
   data() {
     return {
+      excelDate,
       list: null,
       listLoading: true,
       total: 0,
@@ -160,12 +166,37 @@ export default {
       DataT.count().then((res) => {
         this.total = res
       })
+    },
+    // 导出
+    handleExport(row) {
+      this.loading = true
+      const projectCode = row.projectCode
+      const param = { ...this.query, projectCode }
+      delete param.pageSize
+      delete param.pageNum
+      downExcel(param, 'projectReport/downOne').then(res => {
+        const blob = new Blob([res], {
+          type: 'application/vnd.ms-excel'
+        })
+        const objectUrl = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = objectUrl
+        a.download = row.projectName + '_' + excelDate() + '.doc'
+        a.click()
+        this.loading = false
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.search-box {
+  margin-bottom: 20px;
+}
+.filter-item {
+  margin-right: 10px;
+}
   .green{
     color: #008000;
   }

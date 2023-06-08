@@ -20,7 +20,7 @@
         <el-table-column type="index" label="编号" width="80" />
         <el-table-column min-width="527" prop="indicProve" label="已收材料（对应积分指标项）" />
       </el-table> -->
-      <p style="margin-top: 20px" />
+      <p style="margin-top: 20px"></p>
       <table border="1">
         <tr>
           <td class="table-text w80">编号</td>
