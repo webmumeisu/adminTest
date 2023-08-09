@@ -61,5 +61,33 @@ div:focus {
 
 // main-container global css
 .app-container {
+  // padding: 20px;
+  // background-color: #F6F5FB;
+  position: relative;
+  height: 100%;
+}
+//  全局样式
+.filter-container {
   padding: 20px;
+  padding-top: 0;
+  // border-top: 1px solid #F6F5FB;
+}
+.app-container {
+  padding: 20px;
+  // width: 100%;
+  // height: 100%;
+  // position: absolute;
+  // display: flex;
+  // flex-direction: column;
+}
+.el-dialog__header {
+  padding: 15px;
+  background: linear-gradient(#fff, #f6f7fb);
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom: 1px solid #ecedf1;
+}
+.filter-container .el-input__inner {
+  background: linear-gradient(180deg, #EEF9FF, #FFFFFF);
+  border: 1px solid #ffffff;
 }
